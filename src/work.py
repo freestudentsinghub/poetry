@@ -64,7 +64,7 @@ class Category:
         return product_str
 
     def __str__(self):
-        return f"{self.description}, количество продуктов: {self.product_count} шт."
+        return f"{self.description}, количество продуктов: {self.category_count} шт."
 
 
 if __name__ == "__main__":
