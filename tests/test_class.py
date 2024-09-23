@@ -28,6 +28,18 @@ def category():
     )
 
 
+@pytest.fixture
+def example_product1():
+    return Product(
+        "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5
+    )
+
+
+@pytest.fixture
+def example_product2():
+    return Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
+
+
 def test_product_init(product):
     assert product.name == "Samsung Galaxy S23 Ultra"
     assert product.description == "Samsung Galaxy S23 Ultra"
@@ -76,3 +88,19 @@ def test_price_setter(product):
         assert message == "Цена не должна быть нулевая или отрицательная"
 
 
+def test_str_product(product):
+    assert str(product) == "Samsung Galaxy S23 Ultra, 180000 руб. Остаток: 5 шт."
+
+
+def test_str_category(category):
+    assert (
+        str(category)
+        == "Смартфоны, как средство не только коммуникации, "
+           "но и получения дополнительных функций для удобства жизни, количество продуктов: 12 шт."
+    )
+
+
+def test_add(example_product1, example_product2):
+    assert (example_product1.price * example_product1.quantity) + (
+        example_product2.price * example_product2.quantity
+    ) == 2580000.0
