@@ -110,6 +110,13 @@ def product_7():
     )
 
 
+@pytest.fixture
+def category_1():
+    return Category(
+        name="Пустая категория", description="Категория без продуктов", products=[]
+    )
+
+
 def test__add(product_1, product_2, product_6, product_7):
     assert Product.__add__(product_1, product_2) == 2580000.0
     assert Product.__add__(product_6, product_7) == 16750.0
@@ -204,8 +211,7 @@ def test_mixin_print(capsys):
     assert message.out.strip() == 'Product(55" QLED 4K, Фоновая подсветка, 123000.0, 7)'
 
     Smartphone(
-        "Iphone 15", "512GB, Gray space", 210000.0, 8,
-        98.2, "15", 512, "Gray space"
+        "Iphone 15", "512GB, Gray space", 210000.0, 8, 98.2, "15", 512, "Gray space"
     )
     message = capsys.readouterr()
     assert (
@@ -226,3 +232,13 @@ def test_mixin_print(capsys):
         message.out.strip()
         == "LawnGrass(Газонная трава, Элитная трава для газона, 500.0, 20)"
     )
+
+
+def test_quantity_zero(product_1):
+    product_1.quantity = 0
+    assert "Цена не должна быть нулевая или отрицательная"
+
+
+def test_price_category(category, category_1):
+    assert Category.middle_price(category_1) == 0
+    assert Category.middle_price(category) == 140333
